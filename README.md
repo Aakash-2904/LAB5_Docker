@@ -1,4 +1,4 @@
-# 🍷 LAB5 — Dockerized Wine Classifier
+# LAB5 — Dockerized Wine Classifier
 
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
@@ -10,26 +10,26 @@ This is an implementation of [MLOps Docker Lab 1](https://github.com/raminmohamm
 
 ---
 
-## 📑 Table of Contents
-- [Architecture](#-architecture)
-- [Dataset](#-dataset)
-- [Project Structure](#-project-structure)
-- [Prerequisites](#-prerequisites)
-- [Quick Start](#-quick-start)
-- [Expected Output](#-expected-output)
-- [Retrieving the Trained Model](#-retrieving-the-trained-model)
-- [How It Works](#️-how-it-works)
-- [Changes vs. the Original Lab](#-changes-vs-the-original-lab)
-- [Useful Docker Commands](#-useful-docker-commands)
-- [Troubleshooting](#-troubleshooting)
+## Table of Contents
+- [Architecture](#architecture)
+- [Dataset](#dataset)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Expected Output](#expected-output)
+- [Retrieving the Trained Model](#retrieving-the-trained-model)
+- [How It Works](#how-it-works)
+- [Changes vs. the Original Lab](#changes-vs-the-original-lab)
+- [Useful Docker Commands](#useful-docker-commands)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ```mermaid
 flowchart LR
-    subgraph HOST["💻 Host Machine"]
+    subgraph HOST["Host Machine"]
         direction TB
         SRC["src/main.py<br/>src/requirements.txt"]
         DF["dockerfile"]
@@ -37,7 +37,7 @@ flowchart LR
         PKL_H["wine_model.pkl<br/>(copied out)"]
     end
 
-    subgraph BUILD["🔨 docker build -t lab1:v1 ."]
+    subgraph BUILD["docker build -t lab1:v1 ."]
         direction TB
         B1["FROM python:3.10"] --> B2["WORKDIR /app"]
         B2 --> B3["COPY src/ ."]
@@ -45,9 +45,9 @@ flowchart LR
         B4 --> B5["CMD python main.py"]
     end
 
-    IMG[("🐳 Image<br/>lab1:v1")]
+    IMG[("Image<br/>lab1:v1")]
 
-    subgraph RUN["📦 Container /app — docker run lab1:v1"]
+    subgraph RUN["Container /app — docker run lab1:v1"]
         direction TB
         R1["load_wine()<br/>178 × 13"] --> R2["train_test_split<br/>80/20, stratified"]
         R2 --> R3["RandomForestClassifier<br/>100 trees"]
@@ -60,7 +60,7 @@ flowchart LR
     BUILD --> IMG
     IMG -- "docker save" --> TAR
     IMG -- "docker run" --> RUN
-    R4 -- "stdout" --> LOGS["🖥 Terminal output"]
+    R4 -- "stdout" --> LOGS["Terminal output"]
     R5 -- "docker cp" --> PKL_H
 ```
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ---
 
-## 🍇 Dataset
+## Dataset
 
 The [Wine recognition dataset](https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-recognition-dataset) ships with scikit-learn (`sklearn.datasets.load_wine`), so no download is needed.
 
@@ -81,7 +81,7 @@ The [Wine recognition dataset](https://scikit-learn.org/stable/datasets/toy_data
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 LAB5_Docker/
@@ -95,7 +95,7 @@ LAB5_Docker/
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine) installed **and running**
 - ~2 GB free disk space for the image
@@ -109,7 +109,7 @@ docker info
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 0. Clone the repository
@@ -126,11 +126,11 @@ docker save lab1:v1 > my_image.tar
 docker run lab1:v1
 ```
 
-> 💡 To load the saved image on another machine: `docker load < my_image.tar`
+> To load the saved image on another machine: `docker load < my_image.tar`
 
 ---
 
-## 📊 Expected Output
+## Expected Output
 
 ```
 Test accuracy: 1.0000
@@ -151,7 +151,7 @@ Perfect test accuracy is expected here: the Wine dataset is small and its classe
 
 ---
 
-## 💾 Retrieving the Trained Model
+## Retrieving the Trained Model
 
 The model is saved **inside the container** at `/app/wine_model.pkl`. To copy it to your machine:
 
@@ -172,11 +172,11 @@ X = load_wine().data[:5]
 print(model.predict(X))   # [0 0 0 0 0]
 ```
 
-> ⚠️ Load the model with the same scikit-learn version used in the container (1.7.x) to avoid compatibility warnings.
+> Load the model with the same scikit-learn version used in the container (1.7.x) to avoid compatibility warnings.
 
 ---
 
-## ⚙️ How It Works
+## How It Works
 
 ### `dockerfile`
 
@@ -208,7 +208,7 @@ print(model.predict(X))   # [0 0 0 0 0]
 
 ---
 
-## 🔄 Changes vs. the Original Lab
+## Changes vs. the Original Lab
 
 | | Original Lab 1 | This Implementation |
 |---|---|---|
@@ -220,7 +220,7 @@ print(model.predict(X))   # [0 0 0 0 0]
 
 ---
 
-## 🧰 Useful Docker Commands
+## Useful Docker Commands
 
 | Command | Description |
 |---|---|
@@ -234,7 +234,7 @@ print(model.predict(X))   # [0 0 0 0 0]
 
 ---
 
-## 🛠 Troubleshooting
+## Troubleshooting
 
 | Problem | Fix |
 |---|---|
@@ -245,7 +245,7 @@ print(model.predict(X))   # [0 0 0 0 0]
 
 ---
 
-## 📚 References
+## References
 
 - [MLOps Docker Lab 1 — Ramin Mohammadi](https://github.com/raminmohammadi/MLOps/tree/main/Labs/Docker_Labs/Lab1)
 - [scikit-learn Wine dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html)
